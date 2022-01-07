@@ -85,14 +85,17 @@ inquirer
     inquirer
       .prompt([...requiredQuestions, ...filteredQuestions])
       .then((answers) => {
-        console.log(sectionResponse.sections, answers);
         const data = {
           sections: sectionResponse.sections,
           answers: answers
         }
         const md = generateMarkdown(data);
-        fs.writeFile(`README_1.md`, md, (err) => {
-          console.log(err);
+        fs.writeFile(`./generated/README.md`, md, (err) => {
+          if (err) {
+            console.log(err);
+          } else {
+            console.log('Success! Your file is at: generated/README.md');
+          }
         });
       });
   });
