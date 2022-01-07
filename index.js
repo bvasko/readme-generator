@@ -1,12 +1,12 @@
 const fs = require('fs');
 const inquirer = require('inquirer');
-const { generateMarkdown } = require('./utils/generateMarkdown.js');
+const generateMarkdown = require('./utils/generateMarkdown.js');
 
 /**
  * Step 1: indicate which sections you would like to include in your readme
  */
 const sections = [
-  'Description', 'Video/screenshot', 'Installation', 'Usage', 'Credits', 'License', 'Contribute','Tests'
+  'Installation', 'Usage', 'Credits', 'License', 'Contribute','Tests'
 ];
 
 checkboxOptions = sections.map(section => { return {name: `${section}`}});
@@ -21,8 +21,13 @@ const requiredQuestions = [
   {
     type: 'input',
     message: 'Enter project name',
-    name: 'name'
-  },  
+    name: 'title'
+  },
+  {
+    type: 'input',
+    message: 'Enter a description',
+    name: 'description'
+  },
   {
     type: 'input',
     message: 'Enter your github user name',
@@ -30,16 +35,11 @@ const requiredQuestions = [
   },
   {
     type: 'input',
-    message: 'Enter the project name:',
-    name: 'title'
-  }
+    message: 'Enter contact email for questions section',
+    name: 'email'
+  },
 ];
 const optionalQuestions = [
-  {
-    type: 'input',
-    message: 'Enter a description',
-    name: 'description'
-  },
   {
     type: 'input',
     message: 'Enter installation instructions',
@@ -51,9 +51,10 @@ const optionalQuestions = [
     name: 'usage'
   },
   {
-    type: 'input',
-    message: 'Link to video or screenshot',
-    name: 'video/screenshot'
+    type: 'list',
+    name: 'license',
+    message: 'Choose a license',
+    choices: ['Apache','BSD','MIT','GPL-3.0', 'Eclipse']
   },
   {
     type: 'input',
@@ -66,23 +67,11 @@ const optionalQuestions = [
     name: 'tests'
   },
   {
-    type: 'list',
-    choices: ['Apache','BSD','MIT','GNU GPL', 'Eclipse Public License'],
-    message: 'Choose a license',
-    name: 'license'
-  },
-  {
-    type: 'input',
-    message: 'Enter contact email',
-    name: 'email'
-  },
-  {
     type: 'input',
     message: 'Enter credits',
     name: 'credits'
   }
 ];
-
 
 inquirer
   .prompt(checkboxes)
@@ -90,17 +79,20 @@ inquirer
     /**
      * Create question list based on sections checked
      */
-
     const filteredQuestions = sectionResponse.sections.map((resp, i) => {
       return optionalQuestions.find(obj => obj.name === resp.toLowerCase());
     });
-    console.log('map ', filteredQuestions);
     inquirer
-      .prompt([...filteredQuestions, ...requiredQuestions])
+      .prompt([...requiredQuestions, ...filteredQuestions])
       .then((answers) => {
-        console.log(answers)
-        // fs.writeFile(`README_${d}.md`, JSON.stringify(response, null, 2), (err) => {
-        //   console.log(err);
-        // });
+        console.log(sectionResponse.sections, answers);
+        const data = {
+          sections: sectionResponse.sections,
+          answers: answers
+        }
+        const md = generateMarkdown(data);
+        fs.writeFile(`README_1.md`, md, (err) => {
+          console.log(err);
+        });
       });
   });
