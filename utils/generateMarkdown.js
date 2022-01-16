@@ -2,25 +2,19 @@
  * Add sections to table of contents
  */
 
-// TODO: Create a function that returns a license badge based on which license is passed in
-// If there is no license, return an empty string
 function renderLicenseBadge(license) {
   return `![license](https://img.shields.io/badge/license-${license}-blue)`
 }
 
-// TODO: Create a function that returns the license link
+// TODO: import licenses, write to file, and add to repo (or find a better link)
 // If there is no license, return an empty string
 function renderLicenseLink(license) {
-
   return `[${license}](https://choosealicense.com/licenses/${license.toLowerCase()}/) `
 }
 
 function renderLicenseSection(license) {
   return `${renderLicenseLink(license)} ${renderLicenseBadge(license)}`;
 }
-
-// TODO: Create a function that returns the license section of README
-// If there is no license, return an empty string
 
 function renderSections(sections, answers) {
   let content = '';
