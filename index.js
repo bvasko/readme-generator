@@ -51,7 +51,7 @@ inquirer
         }
         const md = generateMarkdown(data);
         //get file path from answers
-        const dir = `${__dirname}/README.md`;
+        const dir = `${process.cwd()}/README.md`;
         fs.writeFile(dir, md, (err) => {
           if (err) {
             console.log(err);
