@@ -1,13 +1,8 @@
 const fs = require('fs');
 const inquirer = require('inquirer');
 const generateMarkdown = require('./utils/generateMarkdown.js');
+const {sections, optionalQuestions} = require('./optionalQuestions');
 
-/**
- * Step 1: indicate which sections you would like to include in your readme
- */
-const sections = [
-  'Installation', 'Usage', 'Credits', 'License', 'Contribute','Tests'
-];
 
 checkboxOptions = sections.map(section => { return {name: `${section}`}});
 
@@ -30,48 +25,16 @@ const requiredQuestions = [
   },
   {
     type: 'input',
-    message: 'Enter your github user name',
-    name: 'username'
-  },
-  {
-    type: 'input',
     message: 'Enter contact email for questions section',
     name: 'email'
   },
+  {
+    type: 'input',
+    message: '[/Users/bonniedipasquale/Work/BC_Github/activities/](your_directory_name): ',
+    name: 'dirname'
+  },
 ];
-const optionalQuestions = [
-  {
-    type: 'input',
-    message: 'Enter installation instructions',
-    name: 'installation'
-  },
-  {
-    type: 'input',
-    message: 'Enter usage information',
-    name: 'usage'
-  },
-  {
-    type: 'list',
-    name: 'license',
-    message: 'Choose a license',
-    choices: ['Apache','BSD','MIT','GPL-3.0', 'Eclipse']
-  },
-  {
-    type: 'input',
-    message: 'Enter contribution information',
-    name: 'contribute'
-  },
-  {
-    type: 'input',
-    message: 'Test instructions',
-    name: 'tests'
-  },
-  {
-    type: 'input',
-    message: 'Enter credits',
-    name: 'credits'
-  }
-];
+
 
 inquirer
   .prompt(checkboxes)
@@ -90,11 +53,13 @@ inquirer
           answers: answers
         }
         const md = generateMarkdown(data);
-        fs.writeFile(`./generated/README.md`, md, (err) => {
+        //get file path from answers
+        const dir = answers.dirname ? `../${answers.dirname}/README.md` : `./generated/README.md`;
+        fs.writeFile(dir, md, (err) => {
           if (err) {
             console.log(err);
           } else {
-            console.log('Success! Your file is at: generated/README.md');
+            console.log(`Success! Your file is at: ${dir}`);
           }
         });
       });

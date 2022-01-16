@@ -25,7 +25,9 @@ This program utilizes the Inquirer node package
 [MIT](https://choosealicense.com/licenses/mit/)  ![license](https://img.shields.io/badge/license-MIT-blue)
 
 # Contribute
-Fork, and submit a PR
+To add a new optional section:
+1. Add the section name to the sections array in optionalQuestions.js
+2. Add an object for the section to the optionalQuestions array in optionalQuestions.js
 
 # Tests
 coming soon!
