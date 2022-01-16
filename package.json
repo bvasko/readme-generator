@@ -1,8 +1,9 @@
 {
-  "name": "readme-generator",
+  "name": "bvasko-readme-generator",
   "version": "1.0.0",
-  "description": "",
+  "description": "Create a readme",
   "main": "index.js",
+  "bin": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -11,7 +12,7 @@
     "url": "git+https://github.com/bvasko/readme-generator.git"
   },
   "keywords": [],
-  "author": "",
+  "author": "bvasko",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/bvasko/readme-generator/issues"
@@ -19,5 +20,8 @@
   "homepage": "https://github.com/bvasko/readme-generator#readme",
   "dependencies": {
     "inquirer": "^8.2.0"
+  },
+  "devDependencies": {
+    "jest": "^27.4.7"
   }
 }

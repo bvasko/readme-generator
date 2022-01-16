@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 const fs = require('fs');
 const inquirer = require('inquirer');
 const generateMarkdown = require('./utils/generateMarkdown.js');
@@ -27,12 +29,7 @@ const requiredQuestions = [
     type: 'input',
     message: 'Enter contact email for questions section',
     name: 'email'
-  },
-  {
-    type: 'input',
-    message: '[/Users/bonniedipasquale/Work/BC_Github/activities/](your_directory_name): ',
-    name: 'dirname'
-  },
+  }
 ];
 
 
@@ -54,7 +51,7 @@ inquirer
         }
         const md = generateMarkdown(data);
         //get file path from answers
-        const dir = answers.dirname ? `../${answers.dirname}/README.md` : `./generated/README.md`;
+        const dir = `${__dirname}/README.md`;
         fs.writeFile(dir, md, (err) => {
           if (err) {
             console.log(err);
