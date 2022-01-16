@@ -2,6 +2,10 @@
  * Add sections to table of contents
  */
 
+function renderScreenshot(filename) {
+  return `![${filename}](${filename})`
+}
+
 function renderLicenseBadge(license) {
   return `![license](https://img.shields.io/badge/license-${license}-blue)`
 }
@@ -18,12 +22,14 @@ function renderLicenseSection(license) {
 
 function renderSections(sections, answers) {
   let content = '';
-  sections.forEach(name => {
-    if (name === null) return;
-    const sectionContent = answers[name.toLowerCase()];
+  sections.forEach(sectionName => {
+    if (sectionName === null) return;
+    console.log(sectionName)
+    const sectionContent = answers[sectionName.toLowerCase()];
 content += `
-# ${name}
-${(name === 'License' ? renderLicenseSection(sectionContent) : sectionContent) }
+# ${sectionName}
+${(sectionName === 'License' ? renderLicenseSection(sectionContent) : sectionContent) }
+${(sectionName === 'screenshot' ? renderScreenshot(sectionContent) : sectionContent) }
 `
   });
   return content;
